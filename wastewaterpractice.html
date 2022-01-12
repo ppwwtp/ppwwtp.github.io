@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Practice Problems</title>
+  <link href="practicepage.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Waste Water Treatment Practice Questions</h1>
+
+
+<div id="qanda">
+  <div class="score">
+    <h4 id="numcorrect">Num correct</h4>
+
+  </div>
+
+  <div id="question">
+    <h4 id="questionnum">Question Number</h4>
+    <p id="questiontext">Question goes here<p>
+  </div>
+
+  <div id="answers">
+    <div id="feedbackmodal" class="modal">
+      <div class="modalcontent">
+        <p class="modaltext">Text goes here</p>
+	<span class="close">Close</span>
+      </div>
+    </div>
+    <button id="buttona" class="answerbutton" onclick="checkAnswer('a')">A</button> 
+    <p id="optiona" class="answer"></p> 
+    <br>
+    <br> 
+    <button id="buttonb" class="answerbutton" onclick="checkAnswer('b')">B</button>
+    <p id="optionb" class="answer"></p> 
+    <br>
+    <br>   
+    <button id="buttonc" class="answerbutton" onclick="checkAnswer('c')">C</button>
+    <p id="optionc" class="answer"></p> 
+    <br>
+    <br>    
+    <button id="buttond" class="answerbutton" onclick="checkAnswer('d')">D</button>
+    <p id="optiond" class="answer"></p> 
+    <br>
+    <br>    
+  </div>
+
+  <div id="nextbutton">
+    <button id="next" onclick="getRandomQuestion()">Next</button>
+  </div>
+  
+</div>
+
+     
+  <script>
+	let questionToAnswer="";
+	let questionNumber = 0;
+        let numCorrect = 0;
+        let questionNumDisplayed = document.getElementById("questionnum");
+        let numCorrectDisplayed = document.getElementById("numcorrect");
+	let questionsAsked = [];
+	let numAnswered = 0;
+	
+
+	let questionBank = []
+        
+
+       const getRandomQuestion = () => {
+         
+         let index = Math.floor(Math.random() * questionBank.length);
+         if (questionsAsked.length === questionBank.length){
+	   alert('All questions have been answered!');
+	 } else if(questionsAsked.includes(index)){
+	    getRandomQuestion();
+         } else {
+           questionNumber += 1;
+	   questionNumDisplayed.innerHTML = 'Question ' + questionNumber + ' of ' + questionBank.length;
+           questionsAsked.push(index);
+           let question = document.getElementById("questiontext");
+           questionToAnswer = questionBank[index];
+
+           question.innerHTML = questionBank[index].question;
+ 
+           let optionA = document.getElementById("optiona");
+	   optionA.innerHTML = questionBank[index].aAnswer;
+
+           let optionB = document.getElementById("optionb");
+	   optionB.innerHTML = questionBank[index].bAnswer;
+
+           let optionC = document.getElementById("optionc");
+	   optionC.innerHTML = questionBank[index].cAnswer;
+
+           let optionD = document.getElementById("optiond");
+	   optionD.innerHTML = questionBank[index].dAnswer;
+       }
+     }
+      
+      const checkAnswer = (answer) =>{
+        let modal = document.getElementById("feedbackmodal");
+        let span = document.getElementsByClassName("close")[0];
+	let modalText = document.getElementsByClassName("modaltext")[0];
+        numAnswered += 1;
+	if(answer === questionToAnswer.correctAnswer.letter && !questionToAnswer.checked){
+	  
+	  questionToAnswer.checked = true;
+          numCorrect += 1;
+          numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
+          modalText.innerHTML = "Correct!\n Your score is " + calculatePercentCorrect() + " %!";
+          modal.style.display = "block";
+          span.onclick = function(){
+            modal.style.display = "none";
+           } 
+         } else if(!questionToAnswer.checked) {
+	  questionToAnswer.checked = true;
+          numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
+          modalText.innerHTML = "Incorrect!\n Your score is " + calculatePercentCorrect() + " percent!";
+          modal.style.display = "block";
+          span.onclick = function(){
+            modal.style.display = "none";
+           } 
+         } else if(answer === questionToAnswer.correctAnswer.letter && questionToAnswer.checked){
+            numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
+            modalText.innerHTML = "Correct!";
+            modal.style.display = "block";
+            span.onclick = function(){
+              modal.style.display = "none";
+            }
+         } else {
+            numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
+            modalText.innerHTML = "Incorrect. Try Again.";
+            modal.style.display = "block";
+            span.onclick = function(){
+              modal.style.display = "none";
+}
+}
+}
+	     
+      
+     const calculatePercentCorrect = () => {
+	if(numAnswered === 0){
+	  return 'No Questions Answered Yet';
+} else {
+	let percent = Math.floor(numCorrect / questionNumber * 100);
+	return percent;
+}
+}
+
+        questionBank = [
+		{questionID: 1,
+	question:"The threshold limit value concentration for chlorine vapor is _______.",
+	aAnswer: "0.1 ppm",
+	bAnswer: "0.3 ppm",
+	cAnswer: "0.5 ppm",
+	dAnswer: "1.0 ppm",
+	correctAnswer: {letter: "c",
+        answer: "0.5 ppm"}}, 
+	{questionID: 2,
+	question:"When working in confined spaces where flammable gases may be present, use only tools made of ____.",
+	aAnswer: "Stainless Steel",
+	bAnswer: "Lead",
+	cAnswer: "Iron",
+	dAnswer: "A non-sparking alloy",
+	correctAnswer: {letter: "d",
+answer: "A non-sparking alloy"}},
+        {questionID: 3,
+	  question:"In addition to the worker entering a confined space, what is the minimum number of people required to be present during a confined space entry?",
+	  aAnswer: "1",
+	  bAnswer: "2",
+	  cAnswer: "3",
+	  dAnswer: "4",
+	  correctAnswer: {letter: "a",
+answer: "1"}},
+        {questionID: 4,
+	  question:"Hearing protection must be made available to all employees exposed to noise levels above ________.",
+	  aAnswer: "85 decibels (dB) averaged over 8 working hours",
+	  bAnswer: "850 decibels (dB) averaged over 8 working hours",
+	  cAnswer: "85 decibels (dB) continuously over 8 working hours",
+	  dAnswer: "85 decibels (dB) at any point in the 8-hour workday",
+	  correctAnswer: {letter: "a",
+answer: "85 decibels (dB) averaged over 8 working hours"}},
+        {questionID: 5,
+	  question:"Recommended personal hygiene practices to minimize the risk of being infected by wastewater pathogens include ______.",
+	  aAnswer: "Only rubbing your eyes at work if you are wearing impervious gloves.",
+	  bAnswer: "Washing your hands before the beginning of your shift.",
+	  cAnswer: "Changing out of your work clothes and showering before leaving work.",
+	  dAnswer: "Reading the material safety data sheets for all chemicals used at the plant.",
+	  correctAnswer: {letter: "c",
+answer: "Changing out of your work clothes and showering before leaving work."}},
+        {questionID: 6,
+	  question:"The BOD loading rate divided by the quantity of microorganisms present in the biological reactors (aeration tanks) is known as _______.",
+	  aAnswer: "Organic loading",
+	  bAnswer: "Toxicity",
+	  cAnswer: "Hydraulic loading",
+	  dAnswer: "Food-to-microorganism ratio",
+	  correctAnswer: {letter: "d",
+answer: "Food-to-microorganism ratio"}},
+        {questionID: 7,
+	  question:"White, fluffy foam on the biological reactors in an activated sludge process is usually caused by ______.",
+	  aAnswer: "Insufficient biomass to treat the incoming waste",
+	  bAnswer: "Low BOD",
+	  cAnswer: "High DO",
+	  dAnswer: "Too little sludge being wasted from process",
+	  correctAnswer: {letter: "a",
+answer: "Insufficient biomass to treat the incoming waste"}},
+        {questionID: 8 ,
+	  question:"Typical components of grit removal systems include:",
+	  aAnswer: "Belt presses",
+	  bAnswer: "Comminutors",
+	  cAnswer: "Chain-and-flight scrapers",
+	  dAnswer: "Bar racks",
+	  correctAnswer: {letter: "c",
+answer: "Chain-and-flight scrapers"}},
+        {questionID: 9,
+	  question:"Daily maintenance procedures for a rectangular secondary clarifier include _______.",
+	  aAnswer: "Inspecting the drive unit and the chain-and-flight system",
+	  bAnswer: "Lubricating the drive unit",
+	  cAnswer: "Inspecting the stilling well",
+	  dAnswer: "Inspecting all oil baths",
+	  correctAnswer: {letter: "a",
+answer: "Inspecting the drive unit and the chain-and-flight system"}},
+        {questionID: 10,
+	  question:"The mechanism used to remove dewatered sludge from the belt of a belt filter press is commonly referred to as a(n) _________.",
+	  aAnswer: "Pressure belt",
+	  bAnswer: "Edge sensor",
+	  cAnswer: "Doctor blade",
+	  dAnswer: "Scum collector",
+	  correctAnswer: {letter: "c",
+answer: "Doctor blade"}},
+        {questionID: 11,
+	  question:"The surface of a healthy activated sludge reactor (aeration tank) should have what type of foam?",
+	  aAnswer: "A thin layer of light tan foam",
+	  bAnswer: "Very dark of black foam",
+	  cAnswer: "Stiff, white foam",
+	  dAnswer: "Thick, greasy, dark tan foam",
+	  correctAnswer: {letter: "a",
+answer: "A thin layer of light tan foam"}},
+        {questionID: 12,
+	  question:"If fine-bubble diffusers are used to introduce air into a biological reactor, the surface of the tank will typically have what type of appearance?",
+	  aAnswer: "Splashing, violent",
+	  bAnswer: "Calm",
+	  cAnswer: "Mildly agitated, partially covered with light foam",
+	  dAnswer: "Turbulent, large bubbles",
+	  correctAnswer: {letter: "c",
+answer: "Mildly agitated, partially covered with light foam"}},
+        {questionID: 13,
+	  question:"Which of the following terms refers to a hydraulic condition, typically indicated by billowing solids flowing over the effluent weir, where a portion of the flow through a clarifier experiences a much shorter detention time than the rest of the wastewater in the tank?",
+	  aAnswer: "Surging",
+	  bAnswer: "Short-circuiting",
+	  cAnswer: "Overload",
+	  dAnswer: "Dispersion",
+	  correctAnswer: {letter: "b",
+answer: "Short-circuiting"}},
+        {questionID: 14,
+	  question:"The typical range of suspended solids in domestic influent wastewater is ________.",
+	  aAnswer: "100-300 mg/L",
+	  bAnswer: "400-600 mg/L",
+	  cAnswer: "700-900 mg/L",
+	  dAnswer: "1000-1200 mg/L",
+	  correctAnswer: {letter: "a",
+answer: "100-300 mg/L"}},
+        {questionID: 15,
+	  question:"If mixed liquor is black in color and the level of DO is extremely low, this typically indicates that the mixed liquor is ______.",
+	  aAnswer: "Healthy",
+	  bAnswer: "Recycling",
+	  cAnswer: "Septic",
+	  dAnswer: "Reversing",
+	  correctAnswer: {letter: "c",
+answer: "Septic"}},
+        {questionID: 16,
+	  question:"Given the following information, calculate the BOD of this sample. Choose the best answer. <br> Given: <br> Initial sample DO = 8.5 mg/L <br> Final sample DO = 5.1 mg/L <br> Amount of sample used = 9mL <br> Total sample volulme = 300mL",
+	  aAnswer: "62 mg/L",
+	  bAnswer: "85 mg/L",
+	  cAnswer: "102 mg/L",
+	  dAnswer: "113 mg/L",
+	  correctAnswer: {letter: "d",
+answer: "113 mg/L"}},
+        {questionID: 17,
+	  question:"The temperature of a drying oven used for TSS analysis must be kept at ______.",
+	  aAnswer: "104 +/- 1  &deg; F",
+	  bAnswer: "104 +/- 1  &deg; C",
+	  cAnswer: "180 +/- 2  &deg; C",
+	  dAnswer: "500 +/- 50  &deg; C",
+	  correctAnswer: {letter: "b",
+answer: "104 +/- 1 degree C"}},
+        {questionID: 18,
+	  question:"Coliform bacteria and the procedures used to test for them are divided into the two categories of ________.",
+	  aAnswer: "MF and MTF",
+	  bAnswer: "LTB and BGB",
+	  cAnswer: "Total and fecal coliforms",
+	  dAnswer: "M-Endo and M-FC",
+	  correctAnswer: {letter: "c",
+answer: "Total and fecal coliforms"}},
+        {questionID: 19,
+	  question:"Assume that the typical pH of the influent at your treatment plant is about 7.2. As you are reviewing new laboratory data, you notice that the pH in the influent this morning was measured to be 6.1. This decrease is most likely to be caused by:",
+	  aAnswer: "A caustic substance in the influent",
+	  bAnswer: "A corrosive (acidic) substance in the influent",
+	  cAnswer: "A change in outside temperature",
+	  dAnswer: "Too much alkalinity in the influent",
+	  correctAnswer: {letter: "b",
+answer: "A corrosive (acidic) substance in the influent"}},
+        {questionID: 20,
+	  question:"The temperature of wastewater that is being treated has the following effect on reaction rates of the microorganisms used in treatment process:",
+	  aAnswer: "Reaction rates stay constant until they stop when temperatures exceed 20&deg;C (70&deg;F)",
+	  bAnswer: "Reaction rates double with every 10&deg;C (18&deg;F) increase in temperature up to a level where high temperature inhibits biological activity.",
+	  cAnswer: "Reaction rates exponentially decrease for every 10&deg;C (18&deg;F) increase in temperature",
+	  dAnswer: "Temperature has no effect on reaction rates when it is in the range of 5&deg;C (41&deg;F) to 30&deg;C (86&deg;F); outside of this range, all reaction rates go to zero",
+	  correctAnswer: {letter: "b",
+answer: "Reaction rates double with every 10&deg;C (18&deg;F) increase in temperature up to a level where high temperature inhibits biological activity."}}];
+        
+    numCorrectDisplayed.innerHTML =  'Score: ' + calculatePercentCorrect();
+
+     getRandomQuestion();
+  </script>
+</body>
+
+
+</html>
