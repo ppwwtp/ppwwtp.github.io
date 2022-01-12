@@ -1,0 +1,65 @@
+p, h1{
+    text-align: center;
+}
+
+h4{
+    text-align: center;
+}
+
+.answer{
+    display: inline;
+    overflow-wrap: break-word;
+}
+#answers{
+    background-color: white;
+    padding-top: 1%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 1%;
+    margin-left: 15%;
+    margin-right: 15%;
+    text-align: left;
+    
+
+}
+#questiontext{
+    display: block;
+}
+
+#question{
+    text-align: center;
+    padding-top: 50px;
+}
+
+#nextbutton{
+    text-align: right;
+    padding-right: 25%;
+}
+
+#qanda{
+    background-color: lightgray;
+    margin-left: auto;
+    margin-right: auto;
+    inline-size: 60%;
+    overflow-wrap: break-word;
+
+}
+
+
+
+
+.modal{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 37.5%;
+    right: 0;
+    width: 25%;
+    height: 25%;
+    background-color: lightblue;
+}
+.close{
+    background-color: green;
+    display: table;
+    margin: 0 auto;
+}
