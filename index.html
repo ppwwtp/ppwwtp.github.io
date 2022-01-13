@@ -75,8 +75,13 @@
            questionNumber += 1;
 	   questionNumDisplayed.innerHTML = 'Question ' + questionNumber + ' of ' + questionBank.length;
            questionsAsked.push(index);
+	   questionToAnswer = questionBank[index];
+           displayQuestion(index);
+       }
+     }
+
+      const displayQuestion = (index) => {
            let question = document.getElementById("questiontext");
-           questionToAnswer = questionBank[index];
 
            question.innerHTML = questionBank[index].question;
  
@@ -91,51 +96,61 @@
 
            let optionD = document.getElementById("optiond");
 	   optionD.innerHTML = questionBank[index].dAnswer;
-       }
-     }
-      
-      const checkAnswer = (answer) =>{
+
+}
+   const checkAnswer = (answer) =>{;
+        numAnswered += 1;
+	if(answer === questionToAnswer.correctAnswer.letter && !questionToAnswer.checked){
+	  displayFeedback(true, questionToAnswer.checked);
+          numCorrect += 1;
+          numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
+          questionToAnswer.checked = true;
+   
+         } else if(!questionToAnswer.checked) {
+          displayFeedback(false, questionToAnswer.checked);
+	  questionToAnswer.checked = true;
+          numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
+        
+         } else if(answer === questionToAnswer.correctAnswer.letter && questionToAnswer.checked){
+            numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
+            displayFeedback(true, questionToAnswer.checked);
+         } else {
+            numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
+            displayFeedback(false, questionToAnswer.checked);
+            }
+}
+
+    const displayFeedback = (isCorrect, alreadyChecked) => {
         let modal = document.getElementById("feedbackmodal");
         let span = document.getElementsByClassName("close")[0];
 	let modalText = document.getElementsByClassName("modaltext")[0];
-        numAnswered += 1;
-	if(answer === questionToAnswer.correctAnswer.letter && !questionToAnswer.checked){
-	  
-	  questionToAnswer.checked = true;
-          numCorrect += 1;
-          numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
+
+        if(!alreadyChecked && isCorrect){
           modalText.innerHTML = "Correct!\n Your score is " + calculatePercentCorrect() + " %!";
           modal.style.display = "block";
           span.onclick = function(){
             modal.style.display = "none";
-           } 
-   
-         } else if(!questionToAnswer.checked) {
-	  questionToAnswer.checked = true;
-          numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
-          modalText.innerHTML = "Incorrect!\n Try again. \n Your score is " + calculatePercentCorrect() + " percent!";
-          modal.style.display = "block";
-          span.onclick = function(){
-            modal.style.display = "none";
-           } 
-        
-         } else if(answer === questionToAnswer.correctAnswer.letter && questionToAnswer.checked){
-            numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
-            modalText.innerHTML = "Correct!";
-            modal.style.display = "block";
-            span.onclick = function(){
-              modal.style.display = "none";
             }
-         
+         } else if (!alreadyChecked && !isCorrect){
+             modalText.innerHTML = "Incorrect!\n Try again. \n Your score is " + calculatePercentCorrect() + " percent!";
+             modal.style.display = "block";
+             span.onclick = function(){
+               modal.style.display = "none";
+           } 
+         } else if (alreadyChecked && isCorrect){
+             modalText.innerHTML = "Correct!";
+             modal.style.display = "block";
+             span.onclick = function(){
+               modal.style.display = "none";
+            }
          } else {
-            numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
-            modalText.innerHTML = "Incorrect. Try Again.";
-            modal.style.display = "block";
-            span.onclick = function(){
-              modal.style.display = "none";
+             modalText.innerHTML = "Incorrect. Try Again.";
+             modal.style.display = "block";
+             span.onclick = function(){
+               modal.style.display = "none";
              }
-            }
-            window.onclick = function(event){
+         }
+ window.onclick = function(event){
             if (event.target === modal) {
               modal.style.display = "none";
             }
@@ -143,9 +158,9 @@
            let nextButton = document.getElementById("nextbutton");
            nextbutton.onclick = function(){
              modal.style.display = "none";
-}
-}
-	     
+            }
+          
+}    
       
      const calculatePercentCorrect = () => {
 	if(numAnswered === 0){
@@ -156,8 +171,8 @@
 }
 }
 
-        questionBank = [
-		{questionID: 1,
+questionBank = [
+	{questionID: 1,
 	question:"The threshold limit value concentration for chlorine vapor is _______.",
 	aAnswer: "0.1 ppm",
 	bAnswer: "0.3 ppm",
@@ -621,10 +636,10 @@ answer: "Amoebas"}},
 	  dAnswer: "Flagellates",
 	  correctAnswer: {letter: "d",
 answer: "Flagellates"}}];
-        
-    numCorrectDisplayed.innerHTML =  'Score: ' + calculatePercentCorrect();
 
-     getRandomQuestion();
+     numCorrectDisplayed.innerHTML =  'Score: ' + calculatePercentCorrect();
+
+     getRandomQuestion();	
   </script>
 </body>
 
