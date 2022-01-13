@@ -23,7 +23,7 @@
     <div id="feedbackmodal" class="modal">
       <div class="modalcontent">
         <p class="modaltext">Text goes here</p>
-	<span class="close">Close</span>
+	<span class="close">Click this window or 'next' button to close</span>
       </div>
     </div>
     <button id="buttona" class="answerbutton" onclick="checkAnswer('a')">A</button> 
@@ -109,14 +109,16 @@
           span.onclick = function(){
             modal.style.display = "none";
            } 
+   
          } else if(!questionToAnswer.checked) {
 	  questionToAnswer.checked = true;
           numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
-          modalText.innerHTML = "Incorrect!\n Your score is " + calculatePercentCorrect() + " percent!";
+          modalText.innerHTML = "Incorrect!\n Try again. \n Your score is " + calculatePercentCorrect() + " percent!";
           modal.style.display = "block";
           span.onclick = function(){
             modal.style.display = "none";
            } 
+        
          } else if(answer === questionToAnswer.correctAnswer.letter && questionToAnswer.checked){
             numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
             modalText.innerHTML = "Correct!";
@@ -124,13 +126,23 @@
             span.onclick = function(){
               modal.style.display = "none";
             }
+         
          } else {
             numCorrectDisplayed.innerHTML = 'Score: ' + calculatePercentCorrect() + '%';
             modalText.innerHTML = "Incorrect. Try Again.";
             modal.style.display = "block";
             span.onclick = function(){
               modal.style.display = "none";
-}
+             }
+            }
+            window.onclick = function(event){
+            if (event.target === modal) {
+              modal.style.display = "none";
+            }
+           }
+           let nextButton = document.getElementById("nextbutton");
+           nextbutton.onclick = function(){
+             modal.style.display = "none";
 }
 }
 	     

@@ -1,9 +1,14 @@
-p, h1{
+h1{
+    text-align: center;
+    color: #556B2F;
+}
+p{
     text-align: center;
 }
 
 h4{
     text-align: center;
+    color: #556B2F;
 }
 
 .answer{
@@ -11,7 +16,7 @@ h4{
     overflow-wrap: break-word;
 }
 #answers{
-    background-color: white;
+    background-color: #F0FFFF;
     padding-top: 1%;
     padding-left: 1%;
     padding-right: 1%;
@@ -35,18 +40,19 @@ h4{
     text-align: right;
     padding-right: 25%;
 }
+#next{
+    width: 100px;
+    height: 50px;
+}
 
 #qanda{
-    background-color: lightgray;
+    background-color: #F0FFFF;
     margin-left: auto;
     margin-right: auto;
     inline-size: 60%;
     overflow-wrap: break-word;
 
 }
-
-
-
 
 .modal{
     display: none;
@@ -56,10 +62,26 @@ h4{
     right: 0;
     width: 25%;
     height: 25%;
-    background-color: lightblue;
+    background-color: #ADFF2F;
 }
 .close{
-    background-color: green;
+    background-color: #F0FFFF;
     display: table;
     margin: 0 auto;
+}
+body{
+    background-color: #F0FFFF;
+    font-family: Helvetica;
+}
+button:hover{
+    background-color: #556B2F;
+    color: #F0FFFF;
+}
+span:hover{
+    background-color: #556B2F;
+    color: #F0FFFF;
+}
+.answerbutton{
+    width: 50px;
+    height: 50px;
 }
